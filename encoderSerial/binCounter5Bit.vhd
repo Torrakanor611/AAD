@@ -2,9 +2,9 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
 ENTITY flipFlopDPET IS
-  PORT (clk, D:     IN STD_LOGIC;
-        nSet, nRst: IN STD_LOGIC;
-        Q, nQ:      OUT STD_LOGIC);
+  PORT (clk, D			: IN STD_LOGIC;
+        nSet, nRst	: IN STD_LOGIC;
+        Q, nQ			: OUT STD_LOGIC);
 END flipFlopDPET;
 
 ARCHITECTURE behavior OF flipFlopDPET IS
@@ -26,7 +26,7 @@ BEGIN
 END behavior;
 
 
-
+----------------------
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -36,29 +36,36 @@ USE gates.all;
 
 -- 3 and gates + 4 xor gates + 5 D-type flip flop
 ENTITY binCounter5Bit IS
-  PORT (nRst: IN STD_LOGIC;
-        clk:  IN STD_LOGIC;
-        c:    OUT STD_LOGIC_VECTOR (4 DOWNTO 0));
+  PORT (nRst		: IN STD_LOGIC;
+        clk			: IN STD_LOGIC;
+        c			: OUT STD_LOGIC_VECTOR (4 DOWNTO 0));
 END binCounter5Bit;
 
 ARCHITECTURE structure OF binCounter5bit IS
-  SIGNAL pD1, pD2, pD3, pD4: STD_LOGIC;
-  SIGNAL iD1, iD2, iD3, iD4: STD_LOGIC;
-  SIGNAL iQ0, iQ1, iQ2, iQ3, iQ4: STD_LOGIC;
-  SIGNAL inQ0: STD_LOGIC;
+  SIGNAL pD1, pD2, pD3, pD4		: STD_LOGIC;
+
+  SIGNAL iD1, iD2, iD3, iD4		: STD_LOGIC;
+  
+  SIGNAL iQ0, iQ1, iQ2, iQ3, iQ4	: STD_LOGIC;
+  
+  SIGNAL inQ0							: STD_LOGIC;
+  
   COMPONENT gateAnd2
-    PORT (x0, x1: IN STD_LOGIC;
-          y:      OUT STD_LOGIC);
+  PORT(x0, x1			: IN STD_LOGIC;
+       y					: OUT STD_LOGIC);
   END COMPONENT;
+  
   COMPONENT gateXor2
-    PORT (x0, x1: IN STD_LOGIC;
-          y:      OUT STD_LOGIC);
+  PORT(x0, x1			: IN STD_LOGIC;
+		 y					: OUT STD_LOGIC);
   END COMPONENT;
+  
   COMPONENT flipFlopDPET
-    PORT (clk, D:     IN STD_LOGIC;
-          nSet, nRst: IN STD_LOGIC;
-          Q, nQ:      OUT STD_LOGIC);
+  PORT(clk, D			: IN STD_LOGIC;
+		 nSet, nRst		: IN STD_LOGIC;
+		 Q, nQ			: OUT STD_LOGIC);
   END COMPONENT;
+  
 BEGIN
   ad1: gateAnd2 PORT MAP (iQ0, iQ1, pD1);
   ad2: gateAnd2 PORT MAP (pD1, iQ2, pD2);

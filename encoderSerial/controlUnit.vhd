@@ -15,8 +15,8 @@ END contMem;
 ARCHITECTURE behavior OF contMem IS
 BEGIN
   PROCESS (addr)
-  TYPE CMem IS ARRAY(0 TO 15) OF STD_LOGIC_VECTOR (6 DOWNTO 0);
-    CONSTANT prog: CMem := ("1100000", --E0  -> a=1,b=1,c=0,d=0,SEL=0,SELP=00 
+  TYPE CMem IS ARRAY(0 TO 14) OF STD_LOGIC_VECTOR (6 DOWNTO 0);
+    CONSTANT prog: CMem := ("1100000", --setup  -> a=1,b=1,c=0,d=0,SEL=0,SELP=00 
 									 "1010000", --E1  -> a=1,b=0,c=1,d=0,SEL=0,SELP=00 
 									 "1001000", --E2  -> a=1,b=0,c=0,d=1,SEL=0,SELP=00 
 									 "0110000", --E3  -> a=0,b=1,c=1,d=0,SEL=0,SELP=00
@@ -30,8 +30,7 @@ BEGIN
 									 "0000100", --E11 -> a=0,b=0,c=0,d=0,SEL=1,SELP=00
 									 "0000101", --E12 -> a=0,b=0,c=0,d=0,SEL=1,SELP=01
 									 "0000110", --E13 -> a=0,b=0,c=0,d=0,SEL=1,SELP=10
-									 "0000111", --E14 -> a=0,b=0,c=0,d=0,SEL=1,SELP=11
-									 "0000000"); --E15 --estado reset  -> a=0,b=0,c=0,d=0,SEL=0,SELP=00
+									 "0000111"); --E14 -> a=0,b=0,c=0,d=0,SEL=1,SELP=11
     VARIABLE pos: INTEGER;
   BEGIN
     pos := CONV_INTEGER (addr);
@@ -39,6 +38,8 @@ BEGIN
   END PROCESS;
 END behavior;
 
+
+----------------------
 
 
 LIBRARY ieee;
@@ -50,32 +51,32 @@ ENTITY controlUnit IS
 		  binRst:	In std_logic;
 		  addr:  	IN STD_LOGIC_VECTOR (3 DOWNTO 0);
         dOut: 		OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
-		  nRst:		out std_logic);
+		  nRst:		out STD_LOGIC);
 END ControlUnit;
 
 ARCHITECTURE behavior OF ControlUnit IS
-	signal sig_binRst : std_logic;
+	signal sig_binRst : STD_LOGIC;
 	
-	component contMem
-   PORT (addr:  IN STD_LOGIC_VECTOR (3 DOWNTO 0);
-         dOut: OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
-	END component;
+	COMPONENT contMem
+   PORT (addr		: IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+         dOut		: OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
+	END COMPONENT;
 	
-	component gateNot
-	port(x0		 : in  std_logic;
-		  y			: out std_logic);
-	end component;
+	COMPONENT gateNot
+	PORT(x0		 	: IN STD_LOGIC;
+		  y			: OUT STD_LOGIC);
+	END COMPONENT;
 	
-	component gateAnd2
-	port(x0, x1		: in  std_logic;
-		  y			: out std_logic);
-	end component;
+	COMPONENT gateAnd2
+	PORT(x0, x1		: IN  STD_LOGIC;
+		  y			: OUT STD_LOGIC);
+	END COMPONENT;
 	
 BEGIN
 	cMem: contMem PORT MAP (addr, dOut);
 	
-	not1: gateNot port map(binRst, sig_binRst); 
+	not1: gateNot PORT MAP(binRst, sig_binRst); 
 	
-	and5 : gateAnd2 port map(nGRst, sig_binRst, nRst);
+	and5 : gateAnd2 PORT MAP(nGRst, sig_binRst, nRst);
 	
 END behavior;
