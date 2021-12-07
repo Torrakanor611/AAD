@@ -113,6 +113,6 @@ BEGIN
 	
 	m210 : mux_2to1 port map(din, sig_mux41out, sOut(2), sig_dout);
 	
-	ffd : flipFlopDPET PORT MAP(clk, sig_dout, '1', nRst, dout);
+	ffd  : flipFlopDPET PORT MAP(clk, sig_dout, '1', nRst, dout);
 
 END structure;

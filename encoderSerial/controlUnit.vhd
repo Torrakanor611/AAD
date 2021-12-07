@@ -44,6 +44,7 @@ END behavior;
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
+-- 1 not gate + 1 and gate
 ENTITY controlUnit IS
   PORT (nGRst: 	IN STD_LOGIC;
 		  binRst:	In std_logic;

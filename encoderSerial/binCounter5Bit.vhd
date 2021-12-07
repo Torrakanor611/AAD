@@ -34,6 +34,7 @@ USE ieee.std_logic_1164.all;
 LIBRARY gates;
 USE gates.all;
 
+-- 3 and gates + 4 xor gates + 5 D-type flip flop
 ENTITY binCounter5Bit IS
   PORT (nRst: IN STD_LOGIC;
         clk:  IN STD_LOGIC;
